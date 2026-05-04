@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Official WPA Pool Rules — Charlie's House</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --dark: #0c0c0c;
+      --dark2: #141414;
+      --dark3: #1e1e1e;
+      --text: #e0d9ce;
+      --muted: #7a7060;
+      --border: rgba(201,168,76,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5vw;
+      height: 72px;
+      background: rgba(12,12,12,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 34px;
+      width: auto;
+      object-fit: contain;
+      filter: brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(5deg);
+      opacity: 0.9;
+    }
+
+    .nav-back {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--gold); }
+
+    /* SIDEBAR + CONTENT LAYOUT */
+    .page-wrap {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: calc(100vh - 72px);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 5vw;
+      gap: 4rem;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      padding: 3rem 0;
+      position: sticky;
+      top: 72px;
+      height: calc(100vh - 72px);
+      overflow-y: auto;
+    }
+
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .sidebar-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sidebar-nav a {
+      display: block;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      border-left: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      color: var(--gold);
+      border-left-color: var(--gold);
+      background: rgba(201,168,76,0.04);
+    }
+
+    .sidebar-nav .nav-sub a {
+      padding-left: 1.5rem;
+      font-size: 0.67rem;
+      opacity: 0.8;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      padding: 4rem 0 8rem;
+    }
+
+    .page-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: #fff;
+    }
+
+    .page-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .gold-rule { width: 40px; height: 1px; background: var(--gold); margin: 2rem 0; }
+
+    .page-intro {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 4rem;
+      max-width: 640px;
+    }
+
+    /* CHAPTER */
+    .chapter {
+      margin-bottom: 5rem;
+      scroll-margin-top: 90px;
+    }
+
+    .chapter-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chapter-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--gold);
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    .chapter-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .chapter-desc {
+      font-size: 0.82rem;
+      color: #9a9080;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      padding: 1.2rem 1.5rem;
+      border-left: 2px solid var(--border);
+      background: var(--dark2);
+    }
+
+    /* SECTION */
+    .section {
+      margin-bottom: 2rem;
+      scroll-margin-top: 90px;
+    }
+
+    .section-title {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-body {
+      background: var(--dark3);
+      border: 1px solid rgba(201,168,76,0.06);
+      padding: 1.5rem;
+      font-size: 0.84rem;
+      line-height: 1.9;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+
+    .section-body:hover { border-color: var(--border); }
+
+    .section-body p + p { margin-top: 0.8rem; }
+
+    .section-body strong { color: #fff; font-weight: 500; }
+
+    /* LETTERED LIST */
+    .alpha-list {
+      list-style: none;
+      margin-top: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .alpha-list li {
+      display: grid;
+      grid-template-columns: 1.6rem 1fr;
+      gap: 0.3rem;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #a09080;
+    }
+
+    .alpha-list li .letter {
+      color: var(--gold);
+      opacity: 0.7;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+    }
+
+    /* FOUL LIST */
+    .foul-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2px;
+      margin-top: 0.8rem;
+    }
+
+    .foul-tag {
+      background: var(--dark2);
+      border: 1px solid rgba(201,168,76,0.08);
+      padding: 0.7rem 1rem;
+      font-size: 0.75rem;
+      color: #9a9080;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      line-height: 1.5;
+    }
+
+    .foul-tag .foul-num {
+      color: var(--gold);
+      opacity: 0.5;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    /* DIVIDER */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 4rem 0;
+      color: var(--muted);
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 2rem 5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p { font-size: 0.68rem; color: var(--muted); }
+    footer a { color: var(--gold); text-decoration: none; font-size: 0.68rem; }
+
+    /* RESPONSIVE */
+    @media (max-width: 800px) {
+      .page-wrap { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; border-bottom: 1px solid var(--border); padding: 2rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index-en.html" class="nav-logo">
+    <img src="https://www.charlieshouse.cz/obrazek/2/logo-text-png/" alt="Charlie's House logo">
+  </a>
+  <a href="index.html#billiards" class="nav-back">← Back to website</a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <span class="sidebar-label">Contents</span>
+    <ul class="sidebar-nav">
+      <li><a href="#obecna">1. General Rules</a></li>
+      <li class="nav-sub">
+        <a href="#odpovednost">1.1 Player Responsibility</a>
+        <a href="#rozehrani">1.2 Lag for Break</a>
+        <a href="#vybaveni">1.3 Player Equipment</a>
+        <a href="#nastavovani">1.4 Spotting Balls</a>
+        <a href="#hra-z-ruky">1.5 Cue Ball in Hand</a>
+        <a href="#hlaseny-strk">1.6 Legal Called Shot</a>
+        <a href="#sednuti">1.7 Settling Balls</a>
+        <a href="#obnova">1.8 Restoring Position</a>
+        <a href="#ruseni">1.9 Outside Interference</a>
+        <a href="#protest">1.10 Appeal</a>
+        <a href="#odstoupeni">1.11 Concession</a>
+        <a href="#pat">1.12 Stalemate</a>
+      </li>
+      <li><a href="#devitka">2. Nine Ball (9-ball)</a></li>
+      <li><a href="#osmicka">3. Eight Ball (8-ball)</a></li>
+      <li><a href="#ctrnactka">4. Straight Pool (14.1)</a></li>
+      <li><a href="#blackball">5. Black Ball</a></li>
+      <li><a href="#fouls">6. Fouls</a></li>
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <span class="page-label">Charlie's House · Zlín · WPA Rules 2008</span>
+    <h1 class="page-title">Official Rules<br><em>of Pool Billiards</em></h1>
+    <div class="gold-rule"></div>
+    <p class="page-intro">Official WPA (World Pool-Billiard Association) rules effective from 1 January 2008. Translation: V. &amp; M. Hajdovský. These rules apply to all pool billiard disciplines played on a flat cloth-covered table bounded by rubber cushions.</p>
+
+    <!-- ══ 1. VŠEOBECNÁ PRAVIDLA ══ -->
+    <div class="chapter" id="obecna">
+      <div class="chapter-header">
+        <span class="chapter-num">1.</span>
+        <span class="chapter-title">Všeobecná pravidla</span>
+      </div>
+      <p class="chapter-desc">These rules apply to all disciplines covered by the WPA regulations, except where they directly conflict with specific game rules. Pool billiard disciplines are played on a flat cloth-covered table. The player uses a cue to strike the cue ball, which in turn strikes the object balls. The aim is to pot coloured balls into six pockets.</p>
+
+      <div class="section" id="odpovednost">
+        <div class="section-title">1.1 Player Responsibility</div>
+        <div class="section-body">
+          It is the responsibility of the player to know all rules, guidelines and regulations used in the competition. Although tournament officials will make all reasonable efforts to make such information available to all players, ultimate responsibility lies with the players.
+        </div>
+      </div>
+
+      <div class="section" id="rozehrani">
+        <div class="section-title">1.2 Lag for Break</div>
+        <div class="section-body">
+          <p>The lag is the first shot of the match and determines the order of play. The player who wins the lag decides who breaks first. The referee places a ball on each side of the table in the kitchen near the head string. Players shoot at approximately the same time, striking the back cushion in order to return the ball closer to the head cushion than their opponent.</p>
+          <p>The lag shot is bad and cannot win if the lagged ball:</p>
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> crosses the centre line</li>
+            <li><span class="letter">b)</span> contacts the back cushion more than once</li>
+            <li><span class="letter">c)</span> is pocketed or driven off the table</li>
+            <li><span class="letter">d)</span> contacts a side cushion</li>
+            <li><span class="letter">e)</span> comes to rest in a corner pocket or crosses the head string line</li>
+          </ul>
+          <p style="margin-top:0.8rem;">Players re-lag if: a lagged ball is struck after the other ball has already reached the back cushion; the referee cannot determine which ball stopped closer to the head cushion; or both lags were foul.</p>
+        </div>
+      </div>
+
+      <div class="section" id="vybaveni">
+        <div class="section-title">1.3 Player Equipment</div>
+        <div class="section-body">
+          <p>Equipment must conform to WPA specifications. Generally players may not introduce unusual equipment into the game. The following uses are considered normal:</p>
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> <strong>Cue</strong> — players may switch cues during a match (break, jump, playing cues). Built-in and add-on extensions are permitted.</li>
+            <li><span class="letter">b)</span> <strong>Chalk</strong> — may be used on the cue tip to prevent miscues; personal chalk must match the cloth colour.</li>
+            <li><span class="letter">c)</span> <strong>Mechanical bridges (rests)</strong> — a maximum of two rests may be used to support the cue during a shot.</li>
+            <li><span class="letter">d)</span> <strong>Gloves</strong> — to improve grip and/or bridge hand function.</li>
+            <li><span class="letter">e)</span> <strong>Talc/powder</strong> — in reasonable quantity as determined by the referee.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section" id="nastavovani">
+        <div class="section-title">1.4 Spotting Balls</div>
+        <div class="section-body">
+          Balls are spotted on the long string as close as possible to the foot spot, between the foot spot and the back cushion, without moving obstructing balls. If a ball cannot be spotted on the foot spot, it is spotted in contact with the obstructing ball. If the cue ball is adjacent to the spotted ball, a small gap must be maintained. If the entire long string is blocked, the ball is spotted as close as possible in front of the foot spot.
+        </div>
+      </div>
+
+      <div class="section" id="hra-z-ruky">
+        <div class="section-title">1.5 Cue Ball in Hand</div>
+        <div class="section-body">
+          When shooting with cue ball in hand, the player may place the cue ball anywhere on the playing surface and may continue to adjust its position until the shot is made. Any part of the cue may be used to move the ball, including the tip, without a forward stroke. In some games and for most breaks, placement may be restricted to the kitchen.
+        </div>
+      </div>
+
+      <div class="section" id="hlaseny-strk">
+        <div class="section-title">1.6 Legal Called Shot</div>
+        <div class="section-body">
+          In games requiring called shots, the intended ball and pocket must be designated before each shot unless obvious. Details of the shot (cushion contacts, other balls touched) are irrelevant. Only one ball may be called per shot. A player may also call a "safety" instead of a ball and pocket, after which play passes to the opponent.
+        </div>
+      </div>
+
+      <div class="section" id="sednuti">
+        <div class="section-title">1.7 Settling Balls</div>
+        <div class="section-body">
+          A ball may settle slightly after it appears to have stopped, probably due to small imperfections in the ball or table. If this does not cause a ball to fall into a pocket, it is considered a normal risk of the game and the ball is not moved back. If a ball falls into a pocket due to such settling, it is returned as closely as possible to its original position.
+        </div>
+      </div>
+
+      <div class="section" id="obnova">
+        <div class="section-title">1.8 Restoring Position</div>
+        <div class="section-body">
+          Where it is necessary to restore the position of balls or to clean them, the referee will place displaced balls in their original positions to the best of their ability. Players must accept the referee's decision on ball placement.
+        </div>
+      </div>
+
+      <div class="section" id="ruseni">
+        <div class="section-title">1.9 Outside Interference</div>
+        <div class="section-body">
+          If outside interference occurs during a shot that affects the outcome, the referee will restore the ball positions and the shot will be replayed. If the interference did not affect the shot, the referee will respot the disturbed balls and play continues.
+        </div>
+      </div>
+
+      <div class="section" id="protest">
+        <div class="section-title">1.10 Appeal and Protest Rules</div>
+        <div class="section-body">
+          If a player believes the referee has made an error, they may ask the referee to reconsider, but referee decisions are final. A player may request a ruling from the designated appeals authority — the referee will suspend play during the appeal. Fouls must be called immediately.
+        </div>
+      </div>
+
+      <div class="section" id="odstoupeni">
+        <div class="section-title">1.11 Concession</div>
+        <div class="section-body">
+          When a player concedes, they forfeit the match. For example, if a player unscrews their jointed cue while the opponent is at the table during the opponent's deciding rack, this is considered a concession of the match.
+        </div>
+      </div>
+
+      <div class="section" id="pat">
+        <div class="section-title">1.12 Stalemate</div>
+        <div class="section-body">
+          If the referee determines that no progress is being made toward a conclusion, they will notify both players and each player will have three more innings. If the referee determines there is still no progress, a stalemate is declared. If both players agree, a stalemate may be declared without playing the three additional innings.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider">disciplines</div>
+
+    <!-- ══ 2. DEVÍTKA ══ -->
+    <div class="chapter" id="devitka">
+      <div class="chapter-header">
+        <span class="chapter-num">2.</span>
+        <span class="chapter-title">Devítka — 9-ball</span>
+      </div>
+      <p class="chapter-desc">Nine-ball is played with nine balls numbered 1 through 9 and the cue ball. Balls are played in ascending numerical order. The player who legally pots ball number 9 wins the game.</p>
+
+      <div class="section">
+        <div class="section-title">2.1 Determining the Break</div>
+        <div class="section-body">The player who won the lag determines who will break for the first game (see 1.2). The standard format is alternating breaks.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.2 Racking for Nine Ball</div>
+        <div class="section-body">The balls are racked as tightly as possible in a diamond shape — ball no. 1 at the top on the foot spot, ball no. 9 in the centre of the diamond. All other balls are placed randomly.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.3 Legal Break</div>
+        <div class="section-body">
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> The break is played with the cue ball in hand in the kitchen.</li>
+            <li><span class="letter">b)</span> If no ball is pocketed, at least four object balls must contact one or more cushions — otherwise the break is a foul.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.4 Push Out</div>
+        <div class="section-body">If the break was not a foul, the shooter may play a push out as their next shot — they must announce this to the referee. Rules 6.2 and 6.3 do not apply to a push out. If the push out is not a foul, the opponent decides who will continue play.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.5 Continuing Play</div>
+        <div class="section-body">A player who legally pots any ball (except on a push out) continues with the next shot. Legally potting ball no. 9 on any shot wins the game. Potting the 9 on a push out does not win the game.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.6 Spotting Balls</div>
+        <div class="section-body">If ball no. 9 is pocketed or driven off the table on a foul or push out, it is returned to the foot spot. No other object ball is returned to the table.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.7 Standard Fouls</div>
+        <div class="section-body">
+          <p>After a standard foul, the opponent plays with the cue ball in hand anywhere on the playing surface. Standard fouls in nine-ball:</p>
+          <div class="foul-grid">
+            <div class="foul-tag"><span class="foul-num">6.1</span> Potopení nebo vyražení bílé ze stolu</div>
+            <div class="foul-tag"><span class="foul-num">6.2</span> Chybná první koule — bílá musí zasáhnout kouli s nejnižším číslem</div>
+            <div class="foul-tag"><span class="foul-num">6.3</span> Bez mantinelu po kontaktu</div>
+            <div class="foul-tag"><span class="foul-num">6.4</span> Bez doteku nohy s podlahou</div>
+            <div class="foul-tag"><span class="foul-num">6.5</span> Vyražená koule ze stolu — vrací se jen č. 9</div>
+            <div class="foul-tag"><span class="foul-num">6.6</span> Dotek koule</div>
+            <div class="foul-tag"><span class="foul-num">6.7</span> Dvojdotek / spící koule</div>
+            <div class="foul-tag"><span class="foul-num">6.8</span> Prostrk</div>
+            <div class="foul-tag"><span class="foul-num">6.9</span> Koule v pohybu</div>
+            <div class="foul-tag"><span class="foul-num">6.10</span> Vadné umístění bílé</div>
+            <div class="foul-tag"><span class="foul-num">6.12</span> Tágo na stole</div>
+            <div class="foul-tag"><span class="foul-num">6.13</span> Hra mimo pořadí</div>
+            <div class="foul-tag"><span class="foul-num">6.15</span> Pomalá hra</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.8 Serious Fouls</div>
+        <div class="section-body">Three consecutive fouls (6.14): penalty is loss of the current game. Unsportsmanlike conduct (6.16): penalty at referee's discretion based on the nature of the offence.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.9 Stalemate</div>
+        <div class="section-body">In the event of a stalemate, the player who broke originally re-breaks.</div>
+      </div>
+    </div>
+
+    <div class="section-divider">eight ball</div>
+
+    <!-- ══ 3. OSMIČKA ══ -->
+    <div class="chapter" id="osmicka">
+      <div class="chapter-header">
+        <span class="chapter-num">3.</span>
+        <span class="chapter-title">Osmička — 8-ball</span>
+      </div>
+      <p class="chapter-desc">Eight-ball is played with fifteen numbered object balls and one cue ball. A group of seven balls belonging to the shooter (1–7 or 9–15) must be completely cleared from the table before attempting to win by pocketing ball no. 8. All shots are called shots.</p>
+
+      <div class="section">
+        <div class="section-title">3.1 Determining the Break</div>
+        <div class="section-body">The player who won the lag decides who breaks first. The standard format is alternating breaks.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.2 Racking for Eight Ball</div>
+        <div class="section-body">Fifteen object balls are racked as tightly as possible in a triangle — the apex ball on the foot spot, ball no. 8 directly behind the apex. One ball from each group of seven occupies the two rear corners. All other balls are placed without intentional arrangement.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.3 Break Shot</div>
+        <div class="section-body">
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> The cue ball is played from hand in the kitchen.</li>
+            <li><span class="letter">b)</span> No ball is called and the cue ball need not contact any specific ball first.</li>
+            <li><span class="letter">c)</span> If the breaker pots a ball without fouling, they continue — the table remains open.</li>
+            <li><span class="letter">d)</span> If no ball is pocketed, at least four must contact a cushion — otherwise an illegal break. The incoming player may: accept the table in position, re-rack and re-break, or allow the offending player to re-break.</li>
+            <li><span class="letter">e)</span> Potting the 8-ball on a legal break is not a foul — player's choice: return ball 8 to the foot spot, or re-rack and re-break.</li>
+            <li><span class="letter">f)</span> Potting both the 8-ball and cue ball: opponent chooses from the options per the rules.</li>
+            <li><span class="letter">g)</span> Driving an object ball off the table on the break is a foul — those balls remain off the table (except ball 8).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.4 Open Table / Choosing Groups</div>
+        <div class="section-body">Before a group is chosen the table is open. The shooter must call their intended ball before each shot. If they legally pot it, that group is theirs and the opponent gets the other group. On an open table any object ball may be contacted first except ball 8.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.5 Continuing Play</div>
+        <div class="section-body">The player continues at the table as long as they keep legally potting called balls or until they win by potting ball no. 8.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.6 Mandatory Called Shots</div>
+        <div class="section-body">Every shot except the break must be called. Ball no. 8 may only be called after the shooter's entire group has been cleared. A player may call "safety" — play then passes to the opponent and any pocketed balls stay in the pockets.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.7 Spotting Balls</div>
+        <div class="section-body">If ball 8 is pocketed or driven off the table on the break, it is returned to the foot spot or a re-rack occurs. No other balls are returned to the table.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.8 Loss of Game</div>
+        <div class="section-body">
+          <p>The shooter loses the game when they:</p>
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> foul while potting ball no. 8</li>
+            <li><span class="letter">b)</span> pot ball no. 8 before their entire group is cleared</li>
+            <li><span class="letter">c)</span> pot ball no. 8 into an uncalled pocket</li>
+            <li><span class="letter">d)</span> drive ball no. 8 off the table</li>
+          </ul>
+          <p style="margin-top:0.6rem;color:var(--muted);font-size:0.8rem;">These cases do not apply on the break shot.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.9 Standard Fouls</div>
+        <div class="section-body">
+          <p>After a foul, the opponent plays with cue ball in hand anywhere on the playing surface. Standard fouls in eight-ball:</p>
+          <div class="foul-grid">
+            <div class="foul-tag"><span class="foul-num">6.1</span> Potopení nebo vyražení bílé ze stolu</div>
+            <div class="foul-tag"><span class="foul-num">6.2</span> Chybná první koule — musí patřit do skupiny hráče</div>
+            <div class="foul-tag"><span class="foul-num">6.3</span> Bez mantinelu po kontaktu</div>
+            <div class="foul-tag"><span class="foul-num">6.4</span> Bez doteku nohy s podlahou</div>
+            <div class="foul-tag"><span class="foul-num">6.5</span> Vyražená koule ze stolu</div>
+            <div class="foul-tag"><span class="foul-num">6.6</span> Dotek koule</div>
+            <div class="foul-tag"><span class="foul-num">6.7</span> Dvojdotek / spící koule</div>
+            <div class="foul-tag"><span class="foul-num">6.8</span> Prostrk</div>
+            <div class="foul-tag"><span class="foul-num">6.9</span> Koule v pohybu</div>
+            <div class="foul-tag"><span class="foul-num">6.10</span> Vadné umístění bílé</div>
+            <div class="foul-tag"><span class="foul-num">6.11</span> Vadná hra ze záhlaví</div>
+            <div class="foul-tag"><span class="foul-num">6.12</span> Tágo na stole</div>
+            <div class="foul-tag"><span class="foul-num">6.13</span> Hra mimo pořadí</div>
+            <div class="foul-tag"><span class="foul-num">6.15</span> Pomalá hra</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.10 Serious Fouls &amp; 3.11 Stalemate</div>
+        <div class="section-body">Fauly dle 3.8 Loss of Game jsou trestány ztrátou rozehrané hry. Nesportovní chování (6.16): trest rozhodne rozhodčí. Pat: rozstřel zopakuje hráč, který rozstřeloval původně.</div>
+      </div>
+    </div>
+
+    <div class="section-divider">straight pool</div>
+
+    <!-- ══ 4. ČTRNÁCTKA ══ -->
+    <div class="chapter" id="ctrnactka">
+      <div class="chapter-header">
+        <span class="chapter-num">4.</span>
+        <span class="chapter-title">Čtrnáctka — 14.1 nekonečná</span>
+      </div>
+      <p class="chapter-desc">Straight pool (14.1 Continuous Pool) is played with fifteen object balls and the cue ball. Each ball legally pocketed on a called shot counts as one point. The first player to reach the required score wins. After fourteen balls have been pocketed, they are re-racked and play continues.</p>
+
+      <div class="section">
+        <div class="section-title">4.1–4.3 Break Shot</div>
+        <div class="section-body">
+          <p>For the opening break, fifteen balls are racked in a triangle with the apex ball on the foot spot. On re-racks, the apex position is left empty (only 14 balls are racked).</p>
+          <p style="margin-top:0.6rem;">For the opening break: cue ball is played from hand in the kitchen. If no called ball is pocketed, the cue ball and two object balls must contact a cushion — otherwise a break foul (penalty: two points deducted). The opponent may accept the position or require the shooter to re-break.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.4 Continuing Play and Winning</div>
+        <div class="section-body">The player continues at the table as long as they keep legally potting called balls or until they win by reaching the required score. When the fourteenth ball of a rack is pocketed, play is suspended while the balls are re-racked.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.5 Mandatory Called Shots</div>
+        <div class="section-body">All shots must be called. A player may call "safety" — play passes to the opponent and any balls pocketed on the safety are returned to the foot spot.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.7 Scoring</div>
+        <div class="section-body">One point for each legally pocketed called ball. Each additional ball pocketed on such a shot also counts as one point. Fouls are penalised by deducting points — the score may become negative.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.9 Standard Fouls</div>
+        <div class="section-body">
+          <p>Standard foul: loss of one point. Fouls include: 6.1, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 6.9, 6.10, 6.11, 6.12, 6.13, 6.15.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.11 Serious Fouls</div>
+        <div class="section-body">For a third foul, one point is deducted as normal, then an additional fifteen-point penalty is applied and the foul counter is reset. All fifteen balls are re-racked and the offending player shoots the opening break.</div>
+      </div>
+    </div>
+
+    <div class="section-divider">black ball</div>
+
+    <!-- ══ 5. BLACK BALL ══ -->
+    <div class="chapter" id="blackball">
+      <div class="chapter-header">
+        <span class="chapter-num">5.</span>
+        <span class="chapter-title">Black ball</span>
+      </div>
+      <p class="chapter-desc">Black ball is played with fifteen object balls (two groups of seven plus the black no. 8) and one cue ball. The player who clears their group and legally pots the black wins the game. Shots are not called.</p>
+
+      <div class="section">
+        <div class="section-title">5.1 Specific Definitions</div>
+        <div class="section-body">
+          <p><strong>Free shot</strong> — after an opponent's foul, the incoming player receives a free shot. Rule 6.2 does not apply and the player may play from position or from hand in the baulk area.</p>
+          <p><strong>Baulk area</strong> — a rectangular zone bounded by the baulk line and three cushions at the head of the table; one-fifth of the playing surface length from the head cushion.</p>
+          <p><strong>Snookered</strong> — a player is snookered when the cue ball has no direct unobstructed path to any part of the legal target ball. Snooker must be declared by the referee to be active.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">5.5 Break Shot</div>
+        <div class="section-body">
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> The cue ball is played from hand in the baulk area.</li>
+            <li><span class="letter">b)</span> At least one ball must be pocketed or at least two object balls must cross the centre line — otherwise a foul.</li>
+            <li><span class="letter">c)</span> If the black ball is pocketed on the break, all balls are re-racked and the same player breaks again.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">5.6–5.7 Group Selection and Continuing Play</div>
+        <div class="section-body">The table is open after the break and remains open until a player pots balls from only one group on a legal shot (not the break or a free shot). The shooter stays at the table as long as they continue legally potting balls or until the game is over.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">5.13 Fouls</div>
+        <div class="section-body">
+          <p>After a foul, the incoming player has one free shot. Fouls include: 6.1, 6.2 (not applicable on free shot), 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 6.9, 6.10, 6.12, 6.13, 6.15.</p>
+          <p style="margin-top:0.8rem;">Additional fouls specific to black ball:</p>
+          <ul class="alpha-list">
+            <li><span class="letter">▸</span> Potting the opponent's ball without simultaneously potting one of your own</li>
+            <li><span class="letter">▸</span> Playing before all balls due to be spotted have been spotted (foul table)</li>
+            <li><span class="letter">▸</span> Jump shot — causing the cue ball to jump over another ball</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">5.14 Loss of Game Fouls</div>
+        <div class="section-body">
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> Potting the black on an illegal shot</li>
+            <li><span class="letter">b)</span> Potting the black while a ball from your own group remains on the table</li>
+            <li><span class="letter">c)</span> Deliberately violating rule 6.2</li>
+            <li><span class="letter">d)</span> Failing to attempt to hit a ball on</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider">fouls</div>
+
+    <!-- ══ 6. FAULY ══ -->
+    <div class="chapter" id="fouls">
+      <div class="chapter-header">
+        <span class="chapter-num">6.</span>
+        <span class="chapter-title">Fauly — definice</span>
+      </div>
+      <p class="chapter-desc">If multiple fouls occur on a single shot, only the most severe applies. If a foul is not called before the next shot begins, it is assumed no foul occurred.</p>
+
+      <div class="section">
+        <div class="section-title">6.1 Pocketing or driving the cue ball off the table</div>
+        <div class="section-body">If the cue ball is pocketed or driven off the table, a foul has occurred.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.2 Wrong First Ball</div>
+        <div class="section-body">In disciplines requiring a specific ball or group to be hit first, it is a foul if the cue ball contacts another ball first.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.3 No cushion contact after the hit</div>
+        <div class="section-body">If no ball is pocketed on a shot, the cue ball must contact an object ball and after that contact at least one ball (cue or any object ball) must reach a cushion — otherwise a foul.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.4 Foot off the floor</div>
+        <div class="section-body">If the shooter does not have at least one foot touching the floor at the moment the cue tip contacts the cue ball, a foul occurs.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.5 Ball Driven off the Table</div>
+        <div class="section-body">Driving a ball off the table is a foul. Whether such a ball is returned to the table depends on the game's specific rules.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.6 Touching a ball</div>
+        <div class="section-body">Touching, moving or deflecting any ball other than through normal shot contact is a foul. An unintentional touch is a standard foul — an intentional touch is unsportsmanlike conduct (6.16).</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.7 Double hit / frozen ball</div>
+        <div class="section-body">If the cue contacts the cue ball more than once on a shot, it is a foul. If the cue ball is near an object ball and the tip is still on the cue ball when it contacts the object ball — foul. Exception: if the cue ball is in contact with an object ball at the start of the shot, the player may play fully or partially into that ball if it is a legal target.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.8 Push shot</div>
+        <div class="section-body">A foul occurs if the contact of the cue tip with the cue ball lasts longer than in normal shots.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.9 Ball in motion</div>
+        <div class="section-body">A foul occurs when a shot is played while any ball in play is still moving or spinning.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.10 Faulty cue ball placement</div>
+        <div class="section-body">When playing with cue ball in hand restricted to the kitchen, it is a foul to play the cue ball from the head string or from outside the kitchen. (The head string is not part of the kitchen.)</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.11 Faulty play from kitchen</div>
+        <div class="section-body">When playing the cue ball from hand in the kitchen, if the first ball contacted also lies in the kitchen, it is a foul — unless the cue ball first crosses the head string. Intentionally playing such a foul is unsportsmanlike conduct.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.12 Cue on the table</div>
+        <div class="section-body">If the shooter uses their cue to aim by resting it on the table without touching it, a foul occurs.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.13 Playing out of turn</div>
+        <div class="section-body">Unintentionally playing out of turn is a standard foul — play continues from the position after the incorrect shot. Intentionally playing out of turn is unsportsmanlike conduct (6.16).</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.14 Three consecutive fouls</div>
+        <div class="section-body">If a player commits three consecutive fouls without a legal shot in between, a serious foul occurs. In nine-ball, the fouls must occur in the same game. The referee must warn a player approaching the table with two fouls already committed.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.15 Slow play</div>
+        <div class="section-body">If the referee considers a player to be playing too slowly, they may advise the player to speed up. If the player does not do so, the referee may impose a shot-clock on both players. Exceeding the time limit constitutes a standard foul.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.16 Unsportsmanlike conduct</div>
+        <div class="section-body">
+          <p>The standard penalty is the same as for serious fouls, but the referee may impose a penalty at their own discretion: warning, standard foul, serious foul, loss of game/set/match, disqualification from the event. Unsportsmanlike conduct is any intentional behaviour that brings the sport into disrepute:</p>
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> disturbing the opponent</li>
+            <li><span class="letter">b)</span> altering the position of balls other than by a legal shot</li>
+            <li><span class="letter">c)</span> deliberate miscue</li>
+            <li><span class="letter">d)</span> continuing to play after a foul or stoppage has been called</li>
+            <li><span class="letter">e)</span> practising during a match</li>
+            <li><span class="letter">f)</span> marking the table</li>
+            <li><span class="letter">g)</span> delaying the game</li>
+            <li><span class="letter">h)</span> inappropriate use of equipment</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <a href="index-en.html" style="display:flex;align-items:center;gap:0.6rem;">
+    <img src="https://www.charlieshouse.cz/obrazek/2/logo-text-png/" alt="logo" style="height:28px;filter:brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(5deg);opacity:0.7;">
+  </a>
+  <p>WPA Regulations · Translation V. &amp; M. Hajdovský · Effective from 1 January 2008</p>
+  <a href="index-en.html">← Back to main page</a>
+</footer>
+
+<script>
+  // Highlight active sidebar link on scroll
+  const sections = document.querySelectorAll('.chapter, .section');
+  const links = document.querySelectorAll('.sidebar-nav a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && e.target.id) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.sidebar-nav a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-80px 0px -60% 0px' });
+
+  sections.forEach(s => s.id && observer.observe(s));
+</script>
+
+</body>
+</html>

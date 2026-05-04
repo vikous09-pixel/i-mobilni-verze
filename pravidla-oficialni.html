@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oficiální pravidla kulečníku WPA — Charlie's House</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --dark: #0c0c0c;
+      --dark2: #141414;
+      --dark3: #1e1e1e;
+      --text: #e0d9ce;
+      --muted: #7a7060;
+      --border: rgba(201,168,76,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5vw;
+      height: 72px;
+      background: rgba(12,12,12,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 34px;
+      width: auto;
+      object-fit: contain;
+      filter: brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(5deg);
+      opacity: 0.9;
+    }
+
+    .nav-back {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--gold); }
+
+    /* SIDEBAR + CONTENT LAYOUT */
+    .page-wrap {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: calc(100vh - 72px);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 5vw;
+      gap: 4rem;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      padding: 3rem 0;
+      position: sticky;
+      top: 72px;
+      height: calc(100vh - 72px);
+      overflow-y: auto;
+    }
+
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .sidebar-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sidebar-nav a {
+      display: block;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      border-left: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      color: var(--gold);
+      border-left-color: var(--gold);
+      background: rgba(201,168,76,0.04);
+    }
+
+    .sidebar-nav .nav-sub a {
+      padding-left: 1.5rem;
+      font-size: 0.67rem;
+      opacity: 0.8;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      padding: 4rem 0 8rem;
+    }
+
+    .page-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: #fff;
+    }
+
+    .page-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .gold-rule { width: 40px; height: 1px; background: var(--gold); margin: 2rem 0; }
+
+    .page-intro {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 4rem;
+      max-width: 640px;
+    }
+
+    /* CHAPTER */
+    .chapter {
+      margin-bottom: 5rem;
+      scroll-margin-top: 90px;
+    }
+
+    .chapter-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chapter-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--gold);
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    .chapter-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .chapter-desc {
+      font-size: 0.82rem;
+      color: #9a9080;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      padding: 1.2rem 1.5rem;
+      border-left: 2px solid var(--border);
+      background: var(--dark2);
+    }
+
+    /* SECTION */
+    .section {
+      margin-bottom: 2rem;
+      scroll-margin-top: 90px;
+    }
+
+    .section-title {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-body {
+      background: var(--dark3);
+      border: 1px solid rgba(201,168,76,0.06);
+      padding: 1.5rem;
+      font-size: 0.84rem;
+      line-height: 1.9;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+
+    .section-body:hover { border-color: var(--border); }
+
+    .section-body p + p { margin-top: 0.8rem; }
+
+    .section-body strong { color: #fff; font-weight: 500; }
+
+    /* LETTERED LIST */
+    .alpha-list {
+      list-style: none;
+      margin-top: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .alpha-list li {
+      display: grid;
+      grid-template-columns: 1.6rem 1fr;
+      gap: 0.3rem;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #a09080;
+    }
+
+    .alpha-list li .letter {
+      color: var(--gold);
+      opacity: 0.7;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+    }
+
+    /* FOUL LIST */
+    .foul-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2px;
+      margin-top: 0.8rem;
+    }
+
+    .foul-tag {
+      background: var(--dark2);
+      border: 1px solid rgba(201,168,76,0.08);
+      padding: 0.7rem 1rem;
+      font-size: 0.75rem;
+      color: #9a9080;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      line-height: 1.5;
+    }
+
+    .foul-tag .foul-num {
+      color: var(--gold);
+      opacity: 0.5;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    /* DIVIDER */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 4rem 0;
+      color: var(--muted);
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 2rem 5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p { font-size: 0.68rem; color: var(--muted); }
+    footer a { color: var(--gold); text-decoration: none; font-size: 0.68rem; }
+
+    /* RESPONSIVE */
+    @media (max-width: 800px) {
+      .page-wrap { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; border-bottom: 1px solid var(--border); padding: 2rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="https://www.charlieshouse.cz/obrazek/2/logo-text-png/" alt="Charlie's House logo">
+  </a>
+  <a href="index.html#billiards" class="nav-back">← Zpět na web</a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <span class="sidebar-label">Obsah</span>
+    <ul class="sidebar-nav">
+      <li><a href="#obecna">1. Všeobecná pravidla</a></li>
+      <li class="nav-sub">
+        <a href="#odpovednost">1.1 Odpovědnost hráče</a>
+        <a href="#rozehrani">1.2 Rozehrání o pořadí</a>
+        <a href="#vybaveni">1.3 Vybavení hráče</a>
+        <a href="#nastavovani">1.4 Nastavování koulí</a>
+        <a href="#hra-z-ruky">1.5 Hra z ruky</a>
+        <a href="#hlaseny-strk">1.6 Řádný hlášený strk</a>
+        <a href="#sednuti">1.7 Sednutí koulí</a>
+        <a href="#obnova">1.8 Obnova pozice</a>
+        <a href="#ruseni">1.9 Vnější rušení</a>
+        <a href="#protest">1.10 Protest</a>
+        <a href="#odstoupeni">1.11 Odstoupení</a>
+        <a href="#pat">1.12 Pat</a>
+      </li>
+      <li><a href="#devitka">2. Devítka (9-ball)</a></li>
+      <li><a href="#osmicka">3. Osmička (8-ball)</a></li>
+      <li><a href="#ctrnactka">4. Čtrnáctka (14.1)</a></li>
+      <li><a href="#blackball">5. Black ball</a></li>
+      <li><a href="#fauly">6. Fauly</a></li>
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <span class="page-label">Charlie's House · Zlín · WPA Pravidla 2008</span>
+    <h1 class="page-title">Oficiální pravidla<br><em>poolového kulečníku</em></h1>
+    <div class="gold-rule"></div>
+    <p class="page-intro">Překlad předpisů WPA (World Pool-Billiard Association) platných od 1. 1. 2008. Překlad: V. &amp; M. Hajdovský. Pravidla se vztahují na disciplíny poolového kulečníku hrané na plochém stole pokrytém suknem, ohraničeném gumovými mantinely.</p>
+
+    <!-- ══ 1. VŠEOBECNÁ PRAVIDLA ══ -->
+    <div class="chapter" id="obecna">
+      <div class="chapter-header">
+        <span class="chapter-num">1.</span>
+        <span class="chapter-title">Všeobecná pravidla</span>
+      </div>
+      <p class="chapter-desc">Tato pravidla se vztahují na všechny disciplíny, pokryté předpisy WPA, s výjimkou přímého rozporu se specifickými pravidly disciplíny. Disciplíny poolového kulečníku se hrají na plochém stole pokrytém suknem. Hráč používá tágo k zasáhnutí bílé koule, která následně zasahuje barevné koule. Cílem je potápět barevné koule do šesti kapes.</p>
+
+      <div class="section" id="odpovednost">
+        <div class="section-title">1.1 Odpovědnost hráče</div>
+        <div class="section-body">
+          Odpovědností hráče je znalost všech pravidel, směrnic a rozpisů použitých pro soutěž. I když turnajové orgány budou činit všechna rozumná opatření, aby takové informace byly řádně dostupné všem hráčům, je konečná odpovědnost na hráčích.
+        </div>
+      </div>
+
+      <div class="section" id="rozehrani">
+        <div class="section-title">1.2 Rozehrání o pořadí</div>
+        <div class="section-body">
+          <p>Rozehrání je prvním strkem zápasu a určuje pořadí pro hru. Hráč, který vyhraje rozehrání, rozhoduje o tom, kdo bude hrát jako první. Rozhodčí umístí kouli na každé straně stolu do záhlaví blízko přední čáry. Hráči zahrají přibližně ve stejném čase tak, aby zasáhli zadní mantinel s cílem vrátit kouli blíž k přednímu mantinelu, než soupeř.</p>
+          <p>Rozehrávací strk je chybný a nemůže vyhrát, pokud rozehraná koule:</p>
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> překročí podélnou čáru</li>
+            <li><span class="letter">b)</span> kontaktuje zadní mantinel více než jednou</li>
+            <li><span class="letter">c)</span> je potopená nebo vyhozená ze stolu</li>
+            <li><span class="letter">d)</span> dotkne se podélného mantinelu</li>
+            <li><span class="letter">e)</span> zastaví se v rohové kapse tak, že překročí linii předního mantinelu</li>
+          </ul>
+          <p style="margin-top:0.8rem;">Hráči zopakují rozehrání, pokud: rozehrávaná koule je zasažena až poté, co druhá koule zasáhla zadní mantinel; rozhodčí není schopen určit, která koule se zastavila blíž k přednímu mantinelu; nebo obě rozehrání byla vadná.</p>
+        </div>
+      </div>
+
+      <div class="section" id="vybaveni">
+        <div class="section-title">1.3 Vybavení používané hráčem</div>
+        <div class="section-body">
+          <p>Vybavení musí odpovídat specifikacím WPA. Obecně hráči nesmějí zavádět neobvyklé vybavení do hry. Za normální se považuje:</p>
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> <strong>Tágo</strong> — hráč smí střídat tága (rozstřelovací, skákací, normální). Smí užívat zabudované i přídavné nástavce.</li>
+            <li><span class="letter">b)</span> <strong>Křída</strong> — smí ji používat na hlavičku tága; vlastní křída musí být barvou v souladu se suknem.</li>
+            <li><span class="letter">c)</span> <strong>Mechanické můstky (hrábě)</strong> — nejvýše dva můstky k podpoře tága během strku.</li>
+            <li><span class="letter">d)</span> <strong>Rukavice</strong> — pro zlepšení úchopu a/nebo funkce ručního můstku.</li>
+            <li><span class="letter">e)</span> <strong>Pudr</strong> — v rozumném množství určeném rozhodčím.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section" id="nastavovani">
+        <div class="section-title">1.4 Nastavování koulí</div>
+        <div class="section-body">
+          Koule jsou nastavovány na podélnou čáru co nejtěsněji k zadnímu bodu a mezi zadní bod a zadní mantinel, bez pohnutí překážejících koulí. Nemůže-li být koule nastavena na zadní bod, nastaví se do kontaktu s příslušnou překážející koulí. Je-li bílá sousedem nastavené koule, musí být zachována malá mezera. Je-li celá podélná čára zablokována, koule se nastaví před zadní bod co nejtěsněji k němu.
+        </div>
+      </div>
+
+      <div class="section" id="hra-z-ruky">
+        <div class="section-title">1.5 Hra z ruky</div>
+        <div class="section-body">
+          Při hře z ruky smí hráč umístit bílou kouli kamkoliv na hrací plochu a smí pokračovat v přemisťování koule, dokud neuskuteční strk. Hráči mohou použít libovolnou část tága k přemisťování koule, včetně hlavičky tága, avšak bez pohybu pro dopředný úder. V některých hrách a pro většinu rozstřelů může být umístění omezeno na záhlaví.
+        </div>
+      </div>
+
+      <div class="section" id="hlaseny-strk">
+        <div class="section-title">1.6 Řádný hlášený strk</div>
+        <div class="section-body">
+          Ve hrách, v nichž je hráč povinen hlásit strky, musí být pro každý strk ohlášena zamýšlená koule a kapsa, pokud to není zřejmé. Podrobnosti strku (zásahy mantinelů, jiné koule) nehrají roli. Pro jeden strk lze ohlásit pouze jedinou kouli. Hráč může rovněž ohlásit „jistotu" místo koule a kapsy, a pak po strku předat hru soupeři.
+        </div>
+      </div>
+
+      <div class="section" id="sednuti">
+        <div class="section-title">1.7 Sednutí koulí</div>
+        <div class="section-body">
+          Koule si může drobně sednout poté, co se zdá, že se zastavila — nejspíš v důsledku drobných nepřesností koule nebo stolu. Pokud to nevyvolá spadnutí do kapsy, koule se nepřemisťuje zpět. Pokud koule spadne v důsledku sednutí, vrací se co nejpřesněji do původní pozice.
+        </div>
+      </div>
+
+      <div class="section" id="obnova">
+        <div class="section-title">1.8 Obnova pozice</div>
+        <div class="section-body">
+          Je-li nezbytné obnovit pozici koulí nebo je očistit, rozhodčí umístí posunuté koule do jejich původních pozic podle svých nejlepších schopností. Hráči jsou povinni akceptovat rozhodnutí rozhodčího o umístění.
+        </div>
+      </div>
+
+      <div class="section" id="ruseni">
+        <div class="section-title">1.9 Vnější rušení</div>
+        <div class="section-body">
+          Pokud se během strku vyskytne vnější rušení, které má vliv na výsledek strku, rozhodčí obnoví postavení koulí a strk se zopakuje. Pokud rušení nemělo vliv na strk, rozhodčí přenastaví zasažené koule a hra pokračuje.
+        </div>
+      </div>
+
+      <div class="section" id="protest">
+        <div class="section-title">1.10 Vyžádání rozhodnutí a pravidla protestu</div>
+        <div class="section-body">
+          Pokud má hráč pocit, že se rozhodčí dopustil chyby, může ho požádat o přehodnocení rozhodnutí, ale rozhodnutí rozhodčích jsou konečná. Hráč může požádat o rozhodnutí stanovenou odvolací autoritu — rozhodčí přeruší hru, dokud odvolání probíhá. Fauly musejí být hlášeny bezprostředně.
+        </div>
+      </div>
+
+      <div class="section" id="odstoupeni">
+        <div class="section-title">1.11 Odstoupení</div>
+        <div class="section-body">
+          Když hráč odstoupí, ztrácí zápas. Například, když hráč rozšroubuje tágo v době, kdy je soupeř u stolu a během soupeřovy rozhodující hry v zápase, bude to pokládáno za odstoupení ze zápasu.
+        </div>
+      </div>
+
+      <div class="section" id="pat">
+        <div class="section-title">1.12 Pat</div>
+        <div class="section-body">
+          Pokud rozhodčí shledá, že není dosahováno žádného pokroku směrem k výsledku, vyhlásí své rozhodnutí a každý z hráčů dostane tři další náběhy u stolu. Pokud rozhodčí usoudí, že stále nedošlo k pokroku, oznámí pat. Pokud souhlasí oba hráči, může být pat vyhlášen i bez odehrání tří dodatečných náběhů.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider">disciplíny</div>
+
+    <!-- ══ 2. DEVÍTKA ══ -->
+    <div class="chapter" id="devitka">
+      <div class="chapter-header">
+        <span class="chapter-num">2.</span>
+        <span class="chapter-title">Devítka — 9-ball</span>
+      </div>
+      <p class="chapter-desc">Devítka se hraje s devíti koulemi číslovanými 1–9 a s bílou koulí. Koule se zahrávají ve vzestupném číselném pořadí. Hráč, který řádně potopí kouli č. 9, vyhrává hru.</p>
+
+      <div class="section">
+        <div class="section-title">2.1 Stanovení prvního rozstřelu</div>
+        <div class="section-body">Hráč, který vyhrál rozehrání, určí, kdo bude rozstřelovat pro první hru (viz 1.2). Standardním formátem je střídavý rozstřel.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.2 Stavění koulí pro devítku</div>
+        <div class="section-body">Barevné koule se stavějí co nejtěsněji k sobě do kosočtverce — koule č. 1 na vrcholu na zadním bodu, koule č. 9 ve středu kosočtverce. Ostatní koule se umístí bez záměrného pořadí.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.3 Řádný rozstřel</div>
+        <div class="section-body">
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> Rozehrává se z ruky v záhlaví.</li>
+            <li><span class="letter">b)</span> Pokud není potopena žádná koule, nejméně čtyři barevné musí narazit na jeden či více mantinelů — jinak rozstřel skončil faulem.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.4 Push out (postrk)</div>
+        <div class="section-body">Pokud během rozstřelu nedošlo k faulu, hráč na strku může zahrát „push out" jako svůj strk — musí to sdělit rozhodčímu. Pak pro tento strk přestávají platit pravidla 6.2 a 6.3. Pokud při postrku nedojde k faulu, rozhodne soupeř, kdo bude pokračovat ve hře.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.5 Pokračování ve hře</div>
+        <div class="section-body">Hráč, který řádně potopí libovolnou kouli (s výjimkou push outu), pokračuje dalším strkem. Řádné potopení koule č. 9 při libovolném strku znamená výhru hry. Potopení č. 9 při push outu výhrou není.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.6 Nastavování koulí</div>
+        <div class="section-body">Pokud byla při faulu nebo push outu potopena nebo vyražena ze stolu koule č. 9, vrátí se na stůl k zadnímu bodu. Žádná jiná barevná koule se na stůl nevrací.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.7 Běžné fauly</div>
+        <div class="section-body">
+          <p>Po běžném faulu hraje soupeř z ruky s bílou kamkoliv na hrací plochu. Běžnými fauly v devítce jsou:</p>
+          <div class="foul-grid">
+            <div class="foul-tag"><span class="foul-num">6.1</span> Potopení nebo vyražení bílé ze stolu</div>
+            <div class="foul-tag"><span class="foul-num">6.2</span> Chybná první koule — bílá musí zasáhnout kouli s nejnižším číslem</div>
+            <div class="foul-tag"><span class="foul-num">6.3</span> Bez mantinelu po kontaktu</div>
+            <div class="foul-tag"><span class="foul-num">6.4</span> Bez doteku nohy s podlahou</div>
+            <div class="foul-tag"><span class="foul-num">6.5</span> Vyražená koule ze stolu — vrací se jen č. 9</div>
+            <div class="foul-tag"><span class="foul-num">6.6</span> Dotek koule</div>
+            <div class="foul-tag"><span class="foul-num">6.7</span> Dvojdotek / spící koule</div>
+            <div class="foul-tag"><span class="foul-num">6.8</span> Prostrk</div>
+            <div class="foul-tag"><span class="foul-num">6.9</span> Koule v pohybu</div>
+            <div class="foul-tag"><span class="foul-num">6.10</span> Vadné umístění bílé</div>
+            <div class="foul-tag"><span class="foul-num">6.12</span> Tágo na stole</div>
+            <div class="foul-tag"><span class="foul-num">6.13</span> Hra mimo pořadí</div>
+            <div class="foul-tag"><span class="foul-num">6.15</span> Pomalá hra</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.8 Závažné fauly</div>
+        <div class="section-body">Tři navazující fauly (6.14): trestem je ztráta rozehrané hry. Nesportovní chování (6.16): trest zvolí rozhodčí s ohledem na povahu přestupku.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">2.9 Pat</div>
+        <div class="section-body">Vznikne-li pat, rozstřel zopakuje hráč, který rozstřeloval původně.</div>
+      </div>
+    </div>
+
+    <div class="section-divider">osmička</div>
+
+    <!-- ══ 3. OSMIČKA ══ -->
+    <div class="chapter" id="osmicka">
+      <div class="chapter-header">
+        <span class="chapter-num">3.</span>
+        <span class="chapter-title">Osmička — 8-ball</span>
+      </div>
+      <p class="chapter-desc">Osmička se hraje s patnácti číslovanými barevnými koulemi a s jednou bílou koulí. Skupina sedmi koulí patřící hráči na strku (1–7 nebo 9–15) musí být kompletně odehrána ze stolu před pokusem o výhru potopením koule č. 8. Strky jsou hlášené.</p>
+
+      <div class="section">
+        <div class="section-title">3.1 Stanovení prvního rozstřelu</div>
+        <div class="section-body">Hráč, který vyhrál rozehrání, určí, kdo má provést první rozstřel. Standardním formátem je střídavý rozstřel.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.2 Stavění koulí pro osmičku</div>
+        <div class="section-body">Patnáct barevných koulí se staví co nejtěsněji v trojúhelníku — čelní koule na zadním bodu, koule č. 8 přímo pod čelní koulí. Jedna z každé skupiny sedmi obsadí dva spodní rohy trojúhelníku. Ostatní koule jsou umístěny bez záměrného rozmístění.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.3 Rozstřel</div>
+        <div class="section-body">
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> Bílá se rozehrává z ruky v záhlaví.</li>
+            <li><span class="letter">b)</span> Nehlásí se žádná koule a bílá nemusí zasáhnout žádnou stanovenou kouli jako první.</li>
+            <li><span class="letter">c)</span> Potopí-li rozstřelující hráč kouli bez faulu, pokračuje — stůl zůstává otevřený.</li>
+            <li><span class="letter">d)</span> Není-li potopena žádná barevná, nejméně čtyři musí narazit na mantinel — jinak vadný rozstřel. Střídající hráč může: akceptovat stůl v pozici, obnovit nastavení a rozstřelit, nebo dovolit chybujícímu hráči nový rozstřel.</li>
+            <li><span class="letter">e)</span> Potopení č. 8 při řádném rozstřelu není faulem — hráč si zvolí: vrátit č. 8 k zadnímu bodu, nebo provést nový rozstřel.</li>
+            <li><span class="letter">f)</span> Potopení č. 8 i bílé zároveň: soupeř si zvolí variantu dle pravidel.</li>
+            <li><span class="letter">g)</span> Vyražení barevné ze stolu při rozstřelu je faul — vyražené koule zůstávají ze hry (kromě č. 8).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.4 Otevřený stůl / výběr skupiny</div>
+        <div class="section-body">Před výběrem skupiny je stůl otevřený. Hráč musí před každým strkem ohlásit zamýšlenou kouli. Potopí-li ji řádně, příslušná skupina se stane jeho a soupeři je přidělena opačná skupina. Při otevřeném stole může být jako první zasažena libovolná barevná koule s výjimkou č. 8.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.5 Pokračování hry</div>
+        <div class="section-body">Hráč zůstává na strku, dokud pokračuje v řádném potápění hlášených koulí nebo dokud nevyhraje potopením koule č. 8.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.6 Povinně hlášené strky</div>
+        <div class="section-body">Každý strk kromě rozstřelu musí být hlášený. Koule č. 8 může být ohlášena teprve po vyklizení stolu od celé skupiny hráče. Hráč smí ohlásit „jistotu" — pak hra přechází na soupeře a potopené koule zůstávají v kapsách.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.7 Nastavování koulí</div>
+        <div class="section-body">Pokud je při rozstřelu č. 8 potopena nebo vyražena ze stolu, vrátí se k zadnímu bodu nebo se provede nový rozstřel. Žádné jiné koule se na stůl nevracejí.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.8 Ztráta hry</div>
+        <div class="section-body">
+          <p>Hráč na strku ztrácí hru, když:</p>
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> dopustí se faulu při potápění koule č. 8</li>
+            <li><span class="letter">b)</span> potopí kouli č. 8 dřív, než je uklizena celá jeho skupina</li>
+            <li><span class="letter">c)</span> potopí kouli č. 8 do nehlášené kapsy</li>
+            <li><span class="letter">d)</span> vyrazí kouli č. 8 ze stolu</li>
+          </ul>
+          <p style="margin-top:0.6rem;color:var(--muted);font-size:0.8rem;">Tyto případy se nevztahují na rozstřel.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.9 Běžné fauly</div>
+        <div class="section-body">
+          <p>Po faulu hraje soupeř z ruky s bílou kamkoliv na hrací plochu. Běžnými fauly v osmičce jsou:</p>
+          <div class="foul-grid">
+            <div class="foul-tag"><span class="foul-num">6.1</span> Potopení nebo vyražení bílé ze stolu</div>
+            <div class="foul-tag"><span class="foul-num">6.2</span> Chybná první koule — musí patřit do skupiny hráče</div>
+            <div class="foul-tag"><span class="foul-num">6.3</span> Bez mantinelu po kontaktu</div>
+            <div class="foul-tag"><span class="foul-num">6.4</span> Bez doteku nohy s podlahou</div>
+            <div class="foul-tag"><span class="foul-num">6.5</span> Vyražená koule ze stolu</div>
+            <div class="foul-tag"><span class="foul-num">6.6</span> Dotek koule</div>
+            <div class="foul-tag"><span class="foul-num">6.7</span> Dvojdotek / spící koule</div>
+            <div class="foul-tag"><span class="foul-num">6.8</span> Prostrk</div>
+            <div class="foul-tag"><span class="foul-num">6.9</span> Koule v pohybu</div>
+            <div class="foul-tag"><span class="foul-num">6.10</span> Vadné umístění bílé</div>
+            <div class="foul-tag"><span class="foul-num">6.11</span> Vadná hra ze záhlaví</div>
+            <div class="foul-tag"><span class="foul-num">6.12</span> Tágo na stole</div>
+            <div class="foul-tag"><span class="foul-num">6.13</span> Hra mimo pořadí</div>
+            <div class="foul-tag"><span class="foul-num">6.15</span> Pomalá hra</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.10 Závažné fauly &amp; 3.11 Pat</div>
+        <div class="section-body">Fauly dle 3.8 Ztráta hry jsou trestány ztrátou rozehrané hry. Nesportovní chování (6.16): trest rozhodne rozhodčí. Pat: rozstřel zopakuje hráč, který rozstřeloval původně.</div>
+      </div>
+    </div>
+
+    <div class="section-divider">čtrnáctka</div>
+
+    <!-- ══ 4. ČTRNÁCTKA ══ -->
+    <div class="chapter" id="ctrnactka">
+      <div class="chapter-header">
+        <span class="chapter-num">4.</span>
+        <span class="chapter-title">Čtrnáctka — 14.1 nekonečná</span>
+      </div>
+      <p class="chapter-desc">Čtrnáctka (straight pool / 14.1 Continuous Pool) se hraje s patnácti barevnými a bílou koulí. Každá koule potopená při řádném hlášeném strku se počítá za jeden bod. První hráč, který dosáhne požadovaného skóre, vyhrává. Poté, co je potopeno čtrnáct koulí, jsou tyto přestavěny do trojúhelníku a hráč pokračuje.</p>
+
+      <div class="section">
+        <div class="section-title">4.1–4.3 Rozstřel</div>
+        <div class="section-body">
+          <p>Pro otevírací rozstřel se staví patnáct barevných do trojúhelníku s čelní koulí na zadním bodu. Při přestavění se čelní koule vynechává (staví se jen 14).</p>
+          <p style="margin-top:0.6rem;">Pro otevírací rozstřel: bílá se rozehrává z ruky v záhlaví. Pokud nebyla potopena hlášená koule, musí bílá a dvě barevné narazit na mantinel — jinak faul při rozstřelu (trest: ztráta dvou bodů). Soupeř může akceptovat pozici nebo požádat o opakování rozstřelu.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.4 Pokračování hry a výhra</div>
+        <div class="section-body">Hráč zůstává na strku, dokud pokračuje v řádném potápění hlášených koulí nebo zvítězí v zápase dosažením požadovaného počtu bodů. Při potopení čtrnácté koule z nastavení se zápas přeruší na dobu přestavění.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.5 Povinné hlášení koulí</div>
+        <div class="section-body">Strky nutno hlásit. Hráč může ohlásit „jistotu" — hra po strku přejde na soupeře a všechny koule potopené při jistotě se vrací k zadnímu bodu.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.7 Bodování</div>
+        <div class="section-body">Jeden bod za každou řádně potopenou hlášenou kouli. Každá dodatečná potopená koule při takovém strku se počítá rovněž za jeden bod. Fauly se trestají odečítáním bodů — skóre může nabýt záporné hodnoty.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.9 Běžné fauly</div>
+        <div class="section-body">
+          <p>Běžný faul: ztráta jednoho bodu. Za běžné jsou pokládány: 6.1, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 6.9, 6.10, 6.11, 6.12, 6.13, 6.15.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.11 Závažné fauly</div>
+        <div class="section-body">Za třetí faul se odečte jeden bod jako obvykle, pak dalších patnáct bodů trestu a počítadlo faulů se vynuluje. Všech patnáct koulí se přenastaví a chybující hráč zahraje otevírací rozstřel.</div>
+      </div>
+    </div>
+
+    <div class="section-divider">black ball</div>
+
+    <!-- ══ 5. BLACK BALL ══ -->
+    <div class="chapter" id="blackball">
+      <div class="chapter-header">
+        <span class="chapter-num">5.</span>
+        <span class="chapter-title">Black ball</span>
+      </div>
+      <p class="chapter-desc">Black ball se hraje s patnácti barevnými (dvě skupiny po sedmi + černá č. 8) a jednou bílou koulí. Hráč, který potopí svou skupinu a řádně potopí černou, vyhrává. Strky nejsou hlášené.</p>
+
+      <div class="section">
+        <div class="section-title">5.1 Specifické definice</div>
+        <div class="section-body">
+          <p><strong>Volný strk (free shot)</strong> — po faulu soupeře získává střídající hráč volný strk. Neplatí pravidlo 6.2 a hráč může hrát z pozice nebo z ruky v rozstřelovém poli.</p>
+          <p><strong>Rozstřelové pole (baulk)</strong> — obdélníková oblast ohraničená rozstřelovou čárou a třemi mantinely v čele stolu; vzdálena jednu pětinu délky hrací plochy od předního mantinelu.</p>
+          <p><strong>Snookerování</strong> — hráč je snookerován, pokud bílá nemá přímou cestu k alespoň části řádné cílové koule. Snooker musí být oznámen rozhodčím.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">5.5 Rozstřel</div>
+        <div class="section-body">
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> Bílá se rozehrává z ruky v rozstřelovém poli.</li>
+            <li><span class="letter">b)</span> Alespoň jedna koule musí být potopena nebo alespoň dvě barevné překročí středovou čáru — jinak faul.</li>
+            <li><span class="letter">c)</span> Pokud při rozstřelu byla potopena černá, všechny koule se přenastavují a stejný hráč rozstřeluje znovu.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">5.6–5.7 Výběr skupiny a pokračování</div>
+        <div class="section-body">Stůl je otevřený po rozstřelu a zůstává otevřený, dokud hráč nepotopí koule pouze z jedné skupiny při řádném strku. Hráč zůstává u stolu, dokud pokračuje v řádném potápění nebo dokud stůl nedohraje.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">5.13 Fauly</div>
+        <div class="section-body">
+          <p>Po faulu má střídající hráč jeden volný strk. Fauly jsou: 6.1, 6.2 (neplatí pro volný strk), 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 6.9, 6.10, 6.12, 6.13, 6.15.</p>
+          <p style="margin-top:0.8rem;">Specifické fauly v black ballu:</p>
+          <ul class="alpha-list">
+            <li><span class="letter">▸</span> Potopení soupeřovy koule bez současného potopení vlastní</li>
+            <li><span class="letter">▸</span> Hra dřív, než byly nastaveny všechny koule (vadný stůl)</li>
+            <li><span class="letter">▸</span> Skok — způsobit, aby bílá přeskočila jinou kouli</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">5.14 Fauly se ztrátou hry</div>
+        <div class="section-body">
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> Potopení černé nedovoleným strkem</li>
+            <li><span class="letter">b)</span> Potopení černé, přičemž na stole zůstává koule z vlastní skupiny</li>
+            <li><span class="letter">c)</span> Záměrné porušení 6.2</li>
+            <li><span class="letter">d)</span> Nepokusit se zasáhnout kouli ve hře</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider">fauly</div>
+
+    <!-- ══ 6. FAULY ══ -->
+    <div class="chapter" id="fauly">
+      <div class="chapter-header">
+        <span class="chapter-num">6.</span>
+        <span class="chapter-title">Fauly — definice</span>
+      </div>
+      <p class="chapter-desc">Pokud dojde v jednom strku k více faulům najednou, využije se pouze nejzávažnější z nich. Pokud faul není ohlášen dřív, než začne další strk, předpokládá se, že k faulu nedošlo.</p>
+
+      <div class="section">
+        <div class="section-title">6.1 Potopení nebo vyražení bílé ze stolu</div>
+        <div class="section-body">Je-li bílá koule potopena nebo vyražena ze stolu, došlo k faulu.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.2 Chybná první koule</div>
+        <div class="section-body">V disciplínách, které vyžadují, aby první zasaženou koulí byla určitá koule nebo jedna ze skupiny koulí, je faulem, pokud bílá zasáhne jako první jinou kouli.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.3 Bez mantinelu po kontaktu</div>
+        <div class="section-body">Pokud při strku nedojde k potopení žádné koule, bílá musí kontaktovat barevnou kouli a po tomto kontaktu musí alespoň jedna (bílá nebo jakákoliv barevná) narazit do mantinelu — jinak faul.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.4 Bez doteku nohy s podlahou</div>
+        <div class="section-body">Pokud se hráč na strku nedotýká alespoň jednou nohou podlahy v okamžiku, kdy hlavička tága kontaktuje bílou kouli, jde o faul.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.5 Vyražená koule ze stolu</div>
+        <div class="section-body">Vyražení koule ze stolu se pokládá za faul. Zda bude taková koule nastavena na stůl, záleží na pravidlech disciplíny.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.6 Dotek koule</div>
+        <div class="section-body">Faulem je dotek, pohyb nebo změna dráhy libovolné barevné nebo bílé koule s výjimkou normálního kontaktu během strku. Je-li faul nechtěný, jde o běžný faul — záměrný faul je nesportovní chování (6.16).</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.7 Dvojdotek / spící koule</div>
+        <div class="section-body">Pokud tágo při strku kontaktuje bílou kouli více než jednou, jde o faul. Je-li bílá blízko barevné a hlavička tága je ještě na bílé, když ta kontaktuje barevnou — faul. Výjimka: bílá je v kontaktu s barevnou na počátku strku — lze hrát plně nebo částečně do této koule, pokud je řádným cílem.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.8 Prostrk</div>
+        <div class="section-body">Faul nastane, pokud kontakt hlavičky tága s bílou koulí trvá déle než při normálních strcích.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.9 Koule v pohybu</div>
+        <div class="section-body">Faul nastane, když strk začne a některá koule ve hře se ještě pohybuje nebo točí.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.10 Vadné umístění bílé</div>
+        <div class="section-body">Pokud se rozehrává z ruky s omezením na záhlaví, je faulem zahrát bílou z přední čáry nebo z místa mimo záhlaví. (Přední čára není součástí záhlaví.)</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.11 Vadná hra ze záhlaví</div>
+        <div class="section-body">Hraje-li se bílá z ruky v záhlaví a první koule, kterou bílá zasáhne, se nachází rovněž v záhlaví, jde o faul — pokud bílá před zásahem nepřešla přes přední čáru. Záměrné zahrání takového faulu je nesportovní chování.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.12 Tágo na stole</div>
+        <div class="section-body">Pokud hráč použije tágo pro namíření tak, že ho položí na stůl aniž by se ho dotýkal, jde o faul.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.13 Hra mimo pořadí</div>
+        <div class="section-body">Neúmyslná hra mimo pořadí je běžný faul — hra pokračuje z pozice po mylném zahrání. Záměrná hra mimo pořadí je nesportovní chování (6.16).</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.14 Tři navazující fauly</div>
+        <div class="section-body">Pokud hráč fauluje třikrát za sebou bez řádného strku mezitím, jde o závažný faul. V devítce se fauly musejí odehrát ve stejné hře. Rozhodčí musí varovat hráče, který přichází ke stolu se dvěma fauly.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.15 Pomalá hra</div>
+        <div class="section-body">Pokud má rozhodčí pocit, že hráč hraje příliš pomalu, může doporučit urychlení. Pokud hráč nezrychlí, rozhodčí může vyhlásit měření času strku pro oba hráče. Překročení časového limitu = běžný faul.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">6.16 Nesportovní chování</div>
+        <div class="section-body">
+          <p>Normální trest je stejný jako za závažné fauly, ale rozhodčí může vyhlásit trest dle vlastního posouzení: varování, běžný faul, závažný faul, ztráta hry/sady/zápasu, vyloučení ze soutěže. Nesportovním chováním je záměrné jednání znevažující sport:</p>
+          <ul class="alpha-list">
+            <li><span class="letter">a)</span> rušení soupeře</li>
+            <li><span class="letter">b)</span> měnění polohy koulí jinak než strkem</li>
+            <li><span class="letter">c)</span> záměrně podebraný strk (miscuing)</li>
+            <li><span class="letter">d)</span> pokračování ve hře po ohlášení faulu nebo přerušení</li>
+            <li><span class="letter">e)</span> cvičení hry během zápasu</li>
+            <li><span class="letter">f)</span> značkování stolu</li>
+            <li><span class="letter">g)</span> zdržování hry</li>
+            <li><span class="letter">h)</span> nevhodné použití vybavení</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <a href="index.html" style="display:flex;align-items:center;gap:0.6rem;">
+    <img src="https://www.charlieshouse.cz/obrazek/2/logo-text-png/" alt="logo" style="height:28px;filter:brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(5deg);opacity:0.7;">
+  </a>
+  <p>Předpisy WPA · Překlad V. &amp; M. Hajdovský · Platnost od 1. 1. 2008</p>
+  <a href="index.html">← Zpět na hlavní stránku</a>
+</footer>
+
+<script>
+  // Highlight active sidebar link on scroll
+  const sections = document.querySelectorAll('.chapter, .section');
+  const links = document.querySelectorAll('.sidebar-nav a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && e.target.id) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.sidebar-nav a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-80px 0px -60% 0px' });
+
+  sections.forEach(s => s.id && observer.observe(s));
+</script>
+
+</body>
+</html>

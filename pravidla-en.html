@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billiards Rules — Charlie's House</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #c9a84c; --dark: #0c0c0c; --dark2: #141414; --dark3: #1e1e1e;
+      --text: #e0d9ce; --muted: #7a7060; --border: rgba(201,168,76,0.18);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--dark); color: var(--text); font-family: 'Montserrat', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+    nav { position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 0 5vw; height: 72px; background: rgba(12,12,12,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+    .nav-logo img { height: 34px; width: auto; object-fit: contain; filter: brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(5deg); opacity: 0.9; }
+    .nav-back { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+    .nav-back:hover { color: var(--gold); }
+    .page-hero { padding: 6rem 5vw 5rem; max-width: 860px; margin: 0 auto; }
+    .page-label { font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1rem; }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.4rem, 6vw, 4.5rem); font-weight: 300; line-height: 1.1; color: #fff; }
+    .page-title em { font-style: italic; color: var(--gold); }
+    .gold-rule { width: 40px; height: 1px; background: var(--gold); margin: 2rem 0; }
+    .content { max-width: 860px; margin: 0 auto; padding: 0 5vw 8rem; }
+    .discipline { margin-bottom: 5rem; }
+    .discipline-header { background: var(--dark2); border: 1px solid var(--border); border-left: 3px solid var(--gold); padding: 2rem 2.5rem; margin-bottom: 0.5rem; }
+    .discipline-name { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; font-style: italic; color: var(--gold); display: block; margin-bottom: 0.6rem; }
+    .discipline-sub { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.05em; }
+    .rules-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .rule-item { background: var(--dark3); border: 1px solid rgba(201,168,76,0.08); padding: 1.8rem 2.5rem 1.8rem 2rem; display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; align-items: start; transition: border-color 0.2s; }
+    .rule-item:hover { border-color: var(--border); }
+    .rule-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--gold); opacity: 0.4; line-height: 1; padding-top: 2px; }
+    .rule-body { font-size: 0.88rem; line-height: 1.85; color: var(--text); }
+    .rule-body strong { color: #fff; font-weight: 500; }
+    .rule-body em { color: var(--gold); font-style: normal; }
+    .faults-title { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-top: 1.2rem; margin-bottom: 0.6rem; display: block; }
+    .faults-list { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+    .faults-list li { font-size: 0.82rem; color: #9a9080; padding-left: 1rem; position: relative; line-height: 1.6; }
+    .faults-list li::before { content: '—'; position: absolute; left: 0; color: var(--gold); opacity: 0.5; }
+    .note-box { background: var(--dark2); border: 1px solid var(--border); padding: 1.8rem 2.5rem; margin-top: 4rem; font-size: 0.85rem; line-height: 1.8; color: var(--muted); }
+    .note-box p + p { margin-top: 0.8rem; }
+    .note-box strong { color: var(--text); font-weight: 400; }
+    .note-box a { color: var(--gold); text-decoration: none; }
+    .note-box a:hover { text-decoration: underline; }
+    .important { margin-top: 3rem; background: var(--dark3); border: 1px solid var(--gold); padding: 1.5rem 2rem; display: flex; gap: 1rem; align-items: flex-start; font-size: 0.85rem; color: var(--text); line-height: 1.7; }
+    .important-icon { color: var(--gold); font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .section-divider { display: flex; align-items: center; gap: 1.5rem; margin: 3.5rem 0; color: var(--muted); font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; }
+    .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    footer p { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.08em; }
+    footer a { color: var(--gold); text-decoration: none; font-size: 0.68rem; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index-en.html" class="nav-logo">
+    <img src="https://www.charlieshouse.cz/obrazek/2/logo-text-png/" alt="Charlie's House logo">
+  </a>
+  <a href="index-en.html#billiards" class="nav-back">← Back to website</a>
+</nav>
+
+<div class="page-hero">
+  <span class="page-label">Charlie's House · Zlín</span>
+  <h1 class="page-title">Billiards<br><em>Rules</em></h1>
+  <div class="gold-rule"></div>
+  <p style="font-size:0.85rem;color:var(--muted);line-height:1.8;">A popular guide to the rules for the most common pool billiards disciplines — ideal for players who want to play properly without unnecessary arguments at the table.</p>
+</div>
+
+<div class="content">
+
+  <!-- 8-BALL -->
+  <div class="discipline">
+    <div class="discipline-header">
+      <span class="discipline-name">8-ball · Eight Ball</span>
+      <span class="discipline-sub">The most popular discipline — play by competition rules instead of pub rules</span>
+    </div>
+
+    <ol class="rules-list">
+      <li class="rule-item">
+        <span class="rule-num">1</span>
+        <div class="rule-body">
+          <strong>Break</strong> — you may break from anywhere behind the head string. If any ball is potted, you may choose which group of balls to play (solids or stripes). You don't have to play solids just because one dropped first if they're awkwardly placed.<br><br>
+          Push the balls in the triangle firmly together so they touch (especially the front ball) — they'll spread nicely.<br><br>
+          <em>Ball placement:</em> The black ball goes in the middle of the middle row. A solid and a stripe occupy the two back corners. The apex ball is placed on the spot — not the black ball!
+        </div>
+      </li>
+      <li class="rule-item">
+        <span class="rule-num">2</span>
+        <div class="rule-body">
+          <strong>Calling shots</strong> — before every shot you must call which ball you intend to pot and into which pocket (including combinations off other balls).<br><br>
+          No flukes — if your called ball goes into a different pocket, or a different ball drops but not the called one, the turn passes to your opponent. Any opponent's balls potted in the process don't count. <em>Potting the black prematurely means losing the game.</em>
+        </div>
+      </li>
+      <li class="rule-item">
+        <span class="rule-num">3</span>
+        <div class="rule-body">
+          <strong>The eight ball</strong> — you must call the eight ball too, but you can nominate any pocket you like. Don't waste time chasing the eight ball to the "far pocket".<br><br>
+          If you're not very accurate and keep putting balls in the wrong pockets, skip rule 2 (don't call your balls during the game) — but always call the eight ball.
+        </div>
+      </li>
+      <li class="rule-item">
+        <span class="rule-num">4</span>
+        <div class="rule-body">
+          <strong>Foul</strong> — after a foul, your opponent places the cue ball anywhere on the table and plays in any direction (one shot only). After the break only, the cue ball is placed anywhere in the kitchen and must be played out of the kitchen.
+
+          <span class="faults-title">Most Common Fouls:</span>
+          <ul class="faults-list">
+            <li>You don't hit your own ball first</li>
+            <li>The cue ball is potted (scratch)</li>
+            <li>After contact, no ball reaches a cushion or a pocket</li>
+            <li>You touch any ball other than with a proper stroke</li>
+            <li>Any ball leaves the table</li>
+            <li>Push shot — the tip stays in contact with the cue ball at the moment it touches a coloured ball (you'll notice the cue ball travels forward at the same speed as the coloured ball). If the cue ball is close to the target ball, use a short sharp tap or play from above so the cue ball stops or rolls back.</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="section-divider">next discipline</div>
+
+  <!-- 9-BALL -->
+  <div class="discipline">
+    <div class="discipline-header">
+      <span class="discipline-name">9-ball · Nine Ball</span>
+      <span class="discipline-sub">The most popular discipline in professional pool</span>
+    </div>
+
+    <ol class="rules-list">
+      <li class="rule-item">
+        <span class="rule-num">1</span>
+        <div class="rule-body">
+          <strong>Object of the game</strong> — 9-ball is played with balls numbered 1 through 9. The aim is to pot them in ascending numerical order. The player who pots the 9-ball wins.<br><br>
+          Unlike 8-ball, the 9-ball may be potted by <em>combination</em> — knocking it into a pocket off another ball wins the game immediately.
+        </div>
+      </li>
+      <li class="rule-item">
+        <span class="rule-num">2</span>
+        <div class="rule-body">
+          <strong>Rack</strong> — balls are racked in a diamond shape: the 1-ball at the top on the foot spot, the 9-ball in the centre of the diamond, the rest in any order. Break from anywhere behind the head string — you must hit the 1-ball first.<br><br>
+          <em>If the 9-ball drops on the break, you win the game.</em> If you can't reasonably start after the break, you may call a "push-out" (ask an experienced player to explain).
+        </div>
+      </li>
+      <li class="rule-item">
+        <span class="rule-num">3</span>
+        <div class="rule-body">
+          <strong>During play</strong> — in 9-ball you don't call shots. You must always hit the lowest-numbered ball on the table first. If any other coloured ball then drops, you continue your turn.<br><br>
+          Use this to your advantage: if you can't pot your current ball directly, hit it into another ball that's sitting near a pocket — ideally the 9-ball.
+        </div>
+      </li>
+      <li class="rule-item">
+        <span class="rule-num">4</span>
+        <div class="rule-body">
+          <strong>Foul</strong> — after a foul your opponent places the cue ball anywhere on the table and plays in any direction. Unlike 8-ball, this applies after the break too. If the 9-ball is potted on a foul shot, it is returned to the foot spot and play continues.
+
+          <span class="faults-title">Most Common Fouls:</span>
+          <ul class="faults-list">
+            <li>You don't hit the lowest-numbered ball on the table first</li>
+            <li>The cue ball is potted</li>
+            <li>After contact, no ball reaches a cushion or a pocket</li>
+            <li>You touch any ball other than with a proper stroke</li>
+            <li>Any ball leaves the table</li>
+            <li>Push shot</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="note-box">
+    <p><strong>Other disciplines on a pool table:</strong> 10-ball (similar to 9-ball with important differences) and 14.1 Continuous — "straight pool" — the royal discipline, because although you can play any ball at any time it is the most demanding. If you're interested, arrange a game with an experienced player — that's the best way to learn the rules and the most useful shots.</p>
+    <p>Complete rules available at <a href="http://www.poolbilliard.cz" target="_blank">www.poolbilliard.cz</a></p>
+  </div>
+
+  <div class="important">
+    <span class="important-icon">◈</span>
+    <span>Regardless of how awkward the body position, <strong>at least one foot of the player must always be touching the floor!</strong></span>
+  </div>
+
+</div>
+
+<footer>
+  <a href="index-en.html" style="display:flex;align-items:center;gap:0.6rem;">
+    <img src="https://www.charlieshouse.cz/obrazek/2/logo-text-png/" alt="logo" style="height:28px;filter:brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(5deg);opacity:0.7;">
+  </a>
+  <p>Potoky 372, Zlín · +420 577 437 204</p>
+  <a href="index-en.html">← Back to main page</a>
+</footer>
+
+</body>
+</html>
